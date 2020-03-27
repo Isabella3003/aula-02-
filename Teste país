@@ -1,0 +1,69 @@
+import javax.swing.JOptionPane;
+
+import model.Pais;
+import service.PaisService;
+
+public class PaisTeste {
+
+	public static void main(String[] args) {
+		int menu;
+
+		String menuTxt = "BD PAIS TESTE\n" +
+						 "1- Add pais;\n" +
+						 "2- Excluir pais;\n" +
+						 "3- Carregar pais\n" +
+						 "4- Alterar Pais\n" +
+						 "5- Carregar pais com a maior população\n" +
+						 "6- Carregar pais com a menor área\n" +
+						 "7- Carregar 3 paises\n" +
+						 "0- Sair";
+
+		PaisService ps = new PaisService();
+
+		do {
+			menu = Integer.parseInt(JOptionPane.showInputDialog(menuTxt));
+
+			if (menu == 0) {}
+			else if (menu == 1) {
+				Pais pais = new Pais(
+							0,
+							JOptionPane.showInputDialog("Insira o nome do país"),
+							Long.parseLong(JOptionPane.showInputDialog("Insira a população do pais")),
+							Double.parseDouble(JOptionPane.showInputDialog("Insira a área do pais"))
+						);
+				ps.incluir(pais);
+			}
+			else if (menu == 2) {
+				ps.excluir(Integer.parseInt(JOptionPane.showInputDialog("Insira o id do pais para excluir")));
+			}
+			else if (menu == 3) {
+				JOptionPane.showMessageDialog(null, ps.carregar(Integer.parseInt(JOptionPane.showInputDialog("Insira o id do pais para carregar"))));
+			}
+			else if (menu == 4) {
+				Pais pais = new Pais(
+						Integer.parseInt(JOptionPane.showInputDialog("Insira o id do pais que deseja atualizar os dados")),
+						JOptionPane.showInputDialog("Insira o nome do país"),
+						Long.parseLong(JOptionPane.showInputDialog("Insira a população do pais")),
+						Double.parseDouble(JOptionPane.showInputDialog("Insira a área do pais"))
+					);
+			ps.atualizar(pais);
+			}
+			else if (menu == 5) {
+				JOptionPane.showMessageDialog(null, ps.carregarMaiorPopulacao());
+			}
+			else if (menu == 6) {
+				JOptionPane.showMessageDialog(null, ps.carregarMenorArea());
+			}
+			else if (menu == 7) {
+				String concatenador = "";
+				Pais[] paises = ps.carrega3paises();
+				for (int i = 0; i < paises.length; i++) {
+					concatenador += paises[i] + "\n";
+				}
+				JOptionPane.showMessageDialog(null, concatenador);
+			}
+
+		} while (menu != 0);
+	}
+
+}
